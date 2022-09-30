@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
@@ -14,21 +12,41 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Nominatim API
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- [Nominatim API Docs](https://nominatim.org/release-docs/develop/api/Overview/) - Nominatim geocoder for OpenStreetMap data.
 
-## Learn More
+#### Requirements
 
-To learn more about Next.js, take a look at the following resources:
+- No heavy uses (an absolute maximum of 1 request per second).
+- Provide a valid HTTP Referer or User-Agent identifying the application (stock User-Agents as set by http libraries will not do).
+  Clearly display attribution as suitable for your medium.
+- Data is provided under the ODbL license which requires to share alike (although small extractions are likely to be covered by fair usage / fair dealing).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Parameters
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The search API has the following format:
 
-## Deploy on Vercel
+```
+https://nominatim.openstreetmap.org/search?<params>
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The search term may be specified with two different sets of parameters:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- q=<query>
+
+Free-form query string to search for. Free-form queries are processed first left-to-right and then right-to-left if that fails. So you may search for pilkington avenue, birmingham as well as for birmingham, pilkington avenue. Commas are optional, but improve performance by reducing the complexity of the search.
+
+- street=<housenumber> <streetname>
+- city=<city>
+- county=<county>
+- state=<state>
+- country=<country>
+- postalcode=<postalcode>
+- addressdetails=<addressdetails>
+
+## Open-source alternatives for Nominatim API
+
+- [Photon](https://photon.komoot.io/) - search-as-you-type with OpenStreetMap.
+
+- [Pelias](https://pelias.io/) - A modular, open-source search engine for our world..
